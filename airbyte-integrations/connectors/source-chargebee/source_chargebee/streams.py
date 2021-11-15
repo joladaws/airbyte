@@ -19,6 +19,7 @@ from chargebee.models import ItemPrice as ItemPriceModel
 from chargebee.models import Order as OrderModel
 from chargebee.models import Plan as PlanModel
 from chargebee.models import Subscription as SubscriptionModel
+from chargebee.models import Transaction as TransactionModel
 
 from .rate_limiting import default_backoff_handler
 
@@ -260,6 +261,13 @@ class AttachedItem(SemiIncrementalChargebeeStream):
     """
 
     api = AttachedItemModel
+    
+class Transaction(IncrementalChargebeeStream):
+    """
+    API docs: https://apidocs.chargebee.com/docs/api/transactions?prod_cat_ver=1#list_transactions
+    """
+
+    api = TransactionModel
 
     def stream_slices(self, **kwargs) -> Iterable[Optional[Mapping[str, Any]]]:
         items_stream = Item(start_date="")
